@@ -1,0 +1,21 @@
+{
+  "fullName": "jQuery In This Post",
+  "name": "jquery-in-this-post",
+  "description": "Creates a dinamically generated bar that display a summary of the post content.",
+  "version": "0.0.1",
+  "author": "*732 <aanduque@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aanduque/jquery.inThisPost.git"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-cssmin": "~0.6.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-watch":  "latest"
+  }
+}
