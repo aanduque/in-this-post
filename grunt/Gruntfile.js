@@ -52,6 +52,45 @@
         }
       },
       
+      copy: {
+        // Copy the plugin to a versioned release directory
+        main: {
+          cwd: '../',
+          expand: true,
+          src: [
+          '**',
+          '!grunt/**',
+          '!release/**',
+          '!.git/**',
+          '!.svn/**',
+          '!.idea/**',
+          '!.sass-cache/**',
+          '!assets/less/**',
+          '!assets/js/plugins/**',
+          '!assets/js/_*.js',
+          '!assets/img/src/**',
+          '!Gruntfile.js',
+          '!package.json',
+          '!.gitignore',
+          '!.gitmodules'
+          ],
+          dest: '../release/<%= pkg.version %>/'
+        }
+      },
+
+      compress: {
+        main: {
+          options: {
+            mode: 'zip',
+            archive: './../release/<%= pkg.name %>.<%= pkg.version %>.zip'
+          },
+          expand: true,
+          cwd: '../release/<%= pkg.version %>/',
+          src: ['**/*'],
+          dest: '<%= pkg.name %>/'
+        }
+      },
+      
       watch: {
         js: {
           files: [
@@ -70,6 +109,9 @@
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-compress');
 
     // Register tasks
     grunt.registerTask('dev', [
@@ -77,5 +119,7 @@
       'cssmin',
       'uglify',
     ]);
+    
+    grunt.registerTask('build', ['dev', 'copy', 'compress']);
 
   };
