@@ -160,7 +160,7 @@
       // Get our subitems
       getSubitems: function(item, startingLevel) {
         
-        item.nextUntil('h' + startingLevel).not('p, span, div, pre').each(function() {
+        item.nextUntil('h' + startingLevel).filter('h' + (startingLevel + 1)).each(function() {
             
           // Redeclare
           var subitem = $(this);
@@ -349,10 +349,10 @@
   };
   
   // Run
-  //  $('.post').inThisPost({
-  //    startingLevel: 'h3',
-  //    position: 'bottom',
-  //    subItems: false
-  //  });
+//    $('.post').inThisPost({
+//      startingLevel: 'h3',
+//      position: 'bottom',
+//      subItems: true
+//    });
 
 }(jQuery));
