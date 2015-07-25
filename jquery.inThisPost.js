@@ -349,10 +349,10 @@
   };
   
   // Run
-  $('.post').inThisPost({
-    startingLevel: 'h3',
-    position: 'bottom',
-    subItems: false
-  });
+  //  $('.post').inThisPost({
+  //    startingLevel: 'h3',
+  //    position: 'bottom',
+  //    subItems: false
+  //  });
 
 }(jQuery));
