@@ -59,7 +59,7 @@
     
     // We let the user set the startingLevel using the element, like 'h2',
     // but for pratical purposes we need a number
-    var startingLevel = parseInt(settings.startingLevel.replace(/\D/g,''));
+    var startingLevel = parseInt(settings.startingLevel.replace(/\D/g,''), 10);
     
     // Variable containing our plugins' methods
     var methods = {
@@ -283,7 +283,7 @@
       generateBlock: function() {
         
         // Main block
-        var block = $('<ul class="content-index-block"></ul>');
+        var block = $('<ul class="content-index-block" data-title="'+ settings.title +'"></ul>');
 
         // Now we add our blocks individually
         $.each(items, function(index, item) {
@@ -352,7 +352,8 @@
 //    $('.post').inThisPost({
 //      startingLevel: 'h3',
 //      position: 'bottom',
-//      subItems: true
+//      subItems: true,
+//      title: 'We you are:',
 //    });
 
 }(jQuery));

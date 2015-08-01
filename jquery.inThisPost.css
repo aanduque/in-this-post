@@ -50,7 +50,7 @@
 }
 
 .content-index-block.content-index-display-inline::before {
-  content: 'In this Post:';
+  content: attr(data-title)/*'In this Post:'*/;
   padding-right: 15px;
   font-weight: bolder;
   color: #555;
@@ -91,8 +91,4 @@
 
 .content-index-block.content-index-display-inline li a.active {
   color: #222;
-}
-
-.content-index-sticky {
-
 }
