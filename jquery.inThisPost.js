@@ -149,6 +149,8 @@
         // div top
         var divTop = $(settings.pageHeader).offset().top;
         
+        // TODO: Check if the header div exists to prevent bug
+        
         // how much it scrolled
         var windowTop = $(window).scrollTop();
 
