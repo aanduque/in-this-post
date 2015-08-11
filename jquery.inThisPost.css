@@ -1,40 +1,6 @@
 /**
- * Absolute
+ * Inline 
  */
-
-.content-index-block.content-index-display-absolute {
-  padding: 15px;
-  margin: 3px;
-  font-size: 70%;
-  list-style: none;
-}
-
-.content-index-block.content-index-display-absolute ul{
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.content-index-block.content-index-display-absolute li ul li {
-  padding-left: 15px;
-}
-
-.content-index-block.content-index-display-absolute a {
-  border-left: solid 3px;
-  padding: 3px 5px;
-  margin: 2px;
-  display: inline-block;
-  border-color: #888;
-}
-
-.content-index-block.content-index-display-absolute a.active {
-  font-weight: bold;
-}
-
-/**
- * Inline
- */
-
 .content-index-block.content-index-display-inline {
   padding: 30px;
   margin: 0;
@@ -50,7 +16,7 @@
 }
 
 .content-index-block.content-index-display-inline::before {
-  content: attr(data-title)/*'In this Post:'*/;
+  content: attr(data-title);
   padding-right: 15px;
   font-weight: bolder;
   color: #555;
@@ -92,3 +58,48 @@
 .content-index-block.content-index-display-inline li a.active {
   color: #222;
 }
+
+/**
+ * Mobile Version
+ */
+@media only screen and (max-width: 768px) {
+  
+  .content-index-block.content-index-display-inline {
+    width: auto;
+    padding: 20px;
+  }
+  
+  .content-index-block.content-index-display-inline > li {
+    display: none;
+  }
+  
+  .content-index-block.content-index-display-inline li a {
+    margin-right: 0;
+  }
+  
+  .content-index-block.content-index-display-inline:hover {
+    width: 100%;
+  }
+  
+  .content-index-block.content-index-display-inline:hover > li,
+  .content-index-block.content-index-display-inline:hover ul {
+    padding: 0;
+    display: block;
+  }
+  
+  .content-index-block.content-index-display-inline:hover a {
+    padding: 3px 0;
+    display: block;
+  }
+  
+  .content-index-block.content-index-display-inline > li:not(:last-child)::after,
+  .content-index-block.content-index-display-inline ul > li::before {
+    margin-right: 0;
+    content: none;
+  }
+  
+  .content-index-block.content-index-display-inline::before {
+    padding-right: 0;
+  }
+  
+} /* end mediaquerie; */

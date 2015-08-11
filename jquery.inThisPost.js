@@ -353,10 +353,10 @@
   
   // Run
   $('.post').inThisPost({
-    startingLevel: 'h3',
+    startingLevel: 'h2',
     position: 'bottom',
     subItems: true,
-    title: 'We you are:',
+    title: 'In This Post:',
   });
 
 }(jQuery));
