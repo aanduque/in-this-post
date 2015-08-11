@@ -3,7 +3,7 @@
   /**
    * jQuery In This Post
    * This plugin adds the functionality of displaying a summary of topics of the posts
-   * version: 0.0.1
+   * version: 0.0.2
    */
   $.fn.inThisPost = function(options) {
         
@@ -146,10 +146,11 @@
         // Adds to the container the relative position needed
         target.parent().css('position', 'relative');
         
-        // div top
-        var divTop = $(settings.pageHeader).offset().top;
+        // Get header
+        var header = $(settings.pageHeader);
         
-        // TODO: Check if the header div exists to prevent bug
+        // We have to check for the head element because if it does not exist, it will result in a bug
+        var divTop = header.length > 0 ? header.offset().top : container.offset().top;
         
         // how much it scrolled
         var windowTop = $(window).scrollTop();
@@ -351,11 +352,11 @@
   };
   
   // Run
-//    $('.post').inThisPost({
-//      startingLevel: 'h3',
-//      position: 'bottom',
-//      subItems: true,
-//      title: 'We you are:',
-//    });
+  $('.post').inThisPost({
+    startingLevel: 'h3',
+    position: 'bottom',
+    subItems: true,
+    title: 'We you are:',
+  });
 
 }(jQuery));
