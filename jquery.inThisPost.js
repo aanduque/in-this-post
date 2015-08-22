@@ -149,8 +149,11 @@
         // Get header
         var header = $(settings.pageHeader);
         
+        // falback top
+        var fallbackTop = container.length > 0 ? container.offset().top : 0;
+        
         // We have to check for the head element because if it does not exist, it will result in a bug
-        var divTop = header.length > 0 ? header.offset().top : container.offset().top;
+        var divTop = header.length > 0 ? header.offset().top : fallbackTop;
         
         // how much it scrolled
         var windowTop = $(window).scrollTop();
@@ -286,7 +289,10 @@
       generateBlock: function() {
         
         // Main block
-        var block = $('<ul class="content-index-block" data-title="'+ settings.title +'"></ul>');
+        var container = $('<div class="content-index-block"><span class="content-index-title">'+ settings.title +'</span><ul class="content-index-list"></ul></div>');
+        
+        // List Block
+        var block = container.children('ul');
 
         // Now we add our blocks individually
         $.each(items, function(index, item) {
@@ -334,13 +340,13 @@
         }); // endeach;
         
         // Adds a theme
-        block.addClass('content-index-display-inline');
+        // block.addClass('content-index-display-inline');
         
         // Set the position based on the user preferences
-        block.css(settings.position, 0);
+        container.css(settings.position, 0);
         
         // Attachs the block we generated to the body
-        $('body').prepend(block);
+        $('body').prepend(container);
         
       }
       
