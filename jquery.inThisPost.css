@@ -74,23 +74,24 @@
  */
 @media only screen and (max-width: 768px) {
   
-  /**
-   * Auto Width 
-   */
+  /** Auto Width */
   .content-index-block {
-    width: auto;
+    width: 100%;
     padding: 20px;
-/*    transition: all 200ms ease;*/
   }
   
-  /**
-   * We now need to hide the list block
-   */
+  /** We now need to hide the list block */
   .content-index-list {
     overflow: hidden;
     width: 0;
     height: 0;
-    transition: all 200ms ease;
+    
+    /* Set our transitions up. */
+/*
+	-webkit-transition: width 200ms ease;
+	-moz-transition: width 200ms ease;
+	transition: width 200ms ease;
+*/
   }
   
   .content-index-block .content-index-list li a {
@@ -112,19 +113,21 @@
     height: auto;
   }
   
-  .content-index-block:hover > li,
-  .content-index-block:hover ul {
+  .content-index-block .content-index-list > li,
+  .content-index-block .content-index-list ul,
+  .content-index-block .content-index-list ul > li {
     padding: 0;
     display: block;
   }
   
-  .content-index-block:hover a {
+  .content-index-block a,
+  .content-index-block .content-index-title {
     padding: 3px 0;
     display: block;
   }
   
-  .content-index-block > li:not(:last-child)::after,
-  .content-index-block ul > li::before {
+  .content-index-block .content-index-list > li:not(:last-child)::after,
+  .content-index-block .content-index-list ul > li::before {
     margin-right: 0;
     content: none;
   }
