@@ -192,20 +192,21 @@
         item.nextUntil(startingLevel).each(function() {
           
           // Our target element
-          var subitem;
+          var subitem = false;
           
           // If this is inside a p, we need to search inside
           if (isChild === true) {
-            subitem = $(this).find(settings.subItems);
+            var found = $(this).find(settings.subItems);
+            if (found.length > 0) {subitem = found;}
           } // end if;
           
           // if is a normal element
           if ($(this).is(settings.subItems)) {
             subitem = $(this);
           }
-
+          
           // Check if this element have anything in the DOM
-          if (subitem !== null && subitem.length > 0) {
+          if (subitem !== false) {
                    
             // Adds our custom id to this item and their level as data-level
             subitem.attr('data-content-id', methods.slugfy(subitem.text()));
@@ -393,11 +394,11 @@
   };
   
   // Run
-  $('.post').inThisPost({
-    startingLevel: 'strong',
-    position: 'bottom',
-    subItems: '.sub-item',
-    title: 'In This Post:',
-  });
+  //  $('.post').inThisPost({
+  //    startingLevel: 'strong',
+  //    position: 'bottom',
+  //    subItems: '.sub-item',
+  //    title: 'In This Post:',
+  //  });
 
 }(jQuery));
