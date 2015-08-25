@@ -2,7 +2,7 @@
   "fullName": "jQuery In This Post",
   "name": "jquery-in-this-post",
   "description": "Creates a dinamically generated bar that display a summary of the post content.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "*732 <aanduque@gmail.com>",
   "repository": {
     "type": "git",

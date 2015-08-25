@@ -3,7 +3,7 @@
   /**
    * jQuery In This Post
    * This plugin adds the functionality of displaying a summary of topics of the posts
-   * version: 0.0.1
+   * version: 0.0.2
    */
   $.fn.inThisPost = function(options) {
         
@@ -15,16 +15,17 @@
       offset: 50,
       
       // Use this option to define the starting level of titles to get.
-      // Remeber that this also sets the sublevel to get, so if you set startingLevel as h2
-      // the sublevel will be set to h3.
+      // You can use any HTML Tag, classes.
+      // To use more than one element, just separate them using commas
       // Default: 'h2'
       startingLevel: 'h2',
       
       // Here you can choose if you want to display subitems also.
-      // Like said in the option above, if your startingLevel was h2, the subitems loaded
-      // will be h3 and so on.
-      // Deafult: true (can also be false)
-      subItems: true,
+      // You can set it to any HTML Tag as well, or false, in which case nothing will be
+      // Displayed but the first level items.
+      // To use more than one element, just separate them using commas
+      // Default: true (can also be false)
+      subItems: 'h3',
       
       // This option is used to define the header element so we can decide when to display
       // the summary bar
@@ -59,7 +60,7 @@
     
     // We let the user set the startingLevel using the element, like 'h2',
     // but for pratical purposes we need a number
-    var startingLevel = parseInt(settings.startingLevel.replace(/\D/g,''), 10);
+    var startingLevel = settings.startingLevel;
     
     // Variable containing our plugins' methods
     var methods = {
@@ -146,10 +147,14 @@
         // Adds to the container the relative position needed
         target.parent().css('position', 'relative');
         
-        // div top
-        var divTop = $(settings.pageHeader).offset().top;
+        // Get header
+        var header = $(settings.pageHeader);
         
-        // TODO: Check if the header div exists to prevent bug
+        // falback top
+        var fallbackTop = container.length > 0 ? container.offset().top : 0;
+        
+        // We have to check for the head element because if it does not exist, it will result in a bug
+        var divTop = header.length > 0 ? header.offset().top : fallbackTop;
         
         // how much it scrolled
         var windowTop = $(window).scrollTop();
@@ -162,18 +167,56 @@
       // Get our subitems
       getSubitems: function(item, startingLevel) {
         
-        item.nextUntil('h' + startingLevel).filter('h' + (startingLevel + 1)).each(function() {
+        // Our subitems target list
+        var list = [];
+        
+        // Lets make our target list
+        var subItemsList = settings.subItems.split(', ');
+        
+        // Lets load our list now
+        $.each(subItemsList, function(index, elem) {
+          list.push(elem);       // Element
+          list.push('p ' + elem); // p exceptions for WordPress
+        });
+        
+        // Our check if this is a P element child
+        var isChild = false;
+        
+        // Exception of inline elements when parent is a p
+        if (item.parent().is('p')) {
+          item = item.parent();
+          isChild = true;
+        }
+        
+        // Now we search for the subitems
+        item.nextUntil(startingLevel).each(function() {
+          
+          // Our target element
+          var subitem = false;
+          
+          // If this is inside a p, we need to search inside
+          if (isChild === true) {
+            var found = $(this).find(settings.subItems);
+            if (found.length > 0) {subitem = found;}
+          } // end if;
+          
+          // if is a normal element
+          if ($(this).is(settings.subItems)) {
+            subitem = $(this);
+          }
+          
+          // Check if this element have anything in the DOM
+          if (subitem !== false) {
+                   
+            // Adds our custom id to this item and their level as data-level
+            subitem.attr('data-content-id', methods.slugfy(subitem.text()));
+            subitem.attr('id', methods.slugfy(subitem.text()));
+            subitem.attr('data-content-parent', methods.slugfy(item.text()));
+
+            // adds to our array as well
+            items.push(subitem);
             
-          // Redeclare
-          var subitem = $(this);
-
-          // Adds our custom id to this item and their level as data-level
-          subitem.attr('data-content-id', methods.slugfy(subitem.text()));
-          subitem.attr('id', methods.slugfy(subitem.text()));
-          subitem.attr('data-content-parent', methods.slugfy(item.text()));
-
-          // adds to our array as well
-          items.push(subitem);
+          } // end if;
 
         });
         
@@ -201,7 +244,7 @@
         });
         
         // Scrap titles up to the levels variable
-        container.find('h' + startingLevel).each(function() {
+        container.find(startingLevel).each(function() {
 
           // our contextual this
           var item = $(this);
@@ -217,7 +260,7 @@
           items.push(item);
           
           // Run our subitems depending on the subItems argument
-          if (settings.subItems === true) {
+          if (settings.subItems !== false) {
             methods.getSubitems(item, startingLevel);
           }
 
@@ -285,7 +328,10 @@
       generateBlock: function() {
         
         // Main block
-        var block = $('<ul class="content-index-block" data-title="'+ settings.title +'"></ul>');
+        var container = $('<div class="content-index-block"><span class="content-index-title">'+ settings.title +'</span><ul class="content-index-list"></ul></div>');
+        
+        // List Block
+        var block = container.children('ul');
 
         // Now we add our blocks individually
         $.each(items, function(index, item) {
@@ -332,14 +378,11 @@
           
         }); // endeach;
         
-        // Adds a theme
-        block.addClass('content-index-display-inline');
-        
         // Set the position based on the user preferences
-        block.css(settings.position, 0);
+        container.css(settings.position, 0);
         
         // Attachs the block we generated to the body
-        $('body').prepend(block);
+        $('body').prepend(container);
         
       }
       
@@ -351,11 +394,11 @@
   };
   
   // Run
-//    $('.post').inThisPost({
-//      startingLevel: 'h3',
-//      position: 'bottom',
-//      subItems: true,
-//      title: 'We you are:',
-//    });
+  //  $('.post').inThisPost({
+  //    startingLevel: 'strong',
+  //    position: 'bottom',
+  //    subItems: '.sub-item',
+  //    title: 'In This Post:',
+  //  });
 
 }(jQuery));

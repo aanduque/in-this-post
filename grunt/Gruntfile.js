@@ -101,6 +101,16 @@
             livereload: true,
           },
         },
+        
+        css: {
+          files: [
+          '../*.css',
+          ],
+          tasks: ['dev'],
+          options: {
+            livereload: true,
+          },
+        },
       }
     });
 

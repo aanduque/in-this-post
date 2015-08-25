@@ -1,41 +1,7 @@
 /**
- * Absolute
+ * Inline 
  */
-
-.content-index-block.content-index-display-absolute {
-  padding: 15px;
-  margin: 3px;
-  font-size: 70%;
-  list-style: none;
-}
-
-.content-index-block.content-index-display-absolute ul{
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.content-index-block.content-index-display-absolute li ul li {
-  padding-left: 15px;
-}
-
-.content-index-block.content-index-display-absolute a {
-  border-left: solid 3px;
-  padding: 3px 5px;
-  margin: 2px;
-  display: inline-block;
-  border-color: #888;
-}
-
-.content-index-block.content-index-display-absolute a.active {
-  font-weight: bold;
-}
-
-/**
- * Inline
- */
-
-.content-index-block.content-index-display-inline {
+.content-index-block {
   padding: 30px;
   margin: 0;
   font-size: 80%;
@@ -49,46 +15,125 @@
   position: fixed;
 }
 
-.content-index-block.content-index-display-inline::before {
-  content: attr(data-title)/*'In this Post:'*/;
+.content-index-block ul {
+  padding: 0 !important;
+}
+
+.content-index-block .content-index-list {
+  margin: 0 !important;
+  display: inline-block;
+}
+
+.content-index-block .content-index-title {
+/*  content: attr(data-title);*/ 
+  display: inline-block;
   padding-right: 15px;
   font-weight: bolder;
   color: #555;
 }
 
-.content-index-block.content-index-display-inline ul {
+.content-index-block .content-index-list ul {
   list-style: none;
   margin: 0;
   display: inline-block;
 }
 
-.content-index-block.content-index-display-inline li {
+.content-index-block .content-index-list li {
   display: inline-block;
   margin: 3px 0;
 }
 
-.content-index-block.content-index-display-inline > li:not(:last-child)::after {
+.content-index-block .content-index-list > li:not(:last-child)::after {
   content: "\00B7";
   margin-right: 10px;
   display: inline-block;
 }
 
-.content-index-block.content-index-display-inline ul > li::before {
+.content-index-block .content-index-list ul > li::before {
   content: "\00B7";
   margin-right: 10px;
   display: inline-block;
 }
 
-.content-index-block.content-index-display-inline ul > li {
+.content-index-block .content-index-list ul > li {
   font-style: italic;
 }
 
-.content-index-block.content-index-display-inline li a {
+.content-index-block .content-index-list li a {
   margin-right: 10px;
   color: #999;
   outline: none;
 }
 
-.content-index-block.content-index-display-inline li a.active {
+.content-index-block .content-index-list li a.active {
   color: #222;
 }
+
+/**
+ * Mobile Version
+ */
+@media only screen and (max-width: 768px) {
+  
+  /** Auto Width */
+  .content-index-block {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /** We now need to hide the list block */
+  .content-index-list {
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    
+    /* Set our transitions up. */
+/*
+	-webkit-transition: width 200ms ease;
+	-moz-transition: width 200ms ease;
+	transition: width 200ms ease;
+*/
+  }
+  
+  .content-index-block .content-index-list li a {
+    margin-right: 0;
+  }
+  
+  /** On Hover we can ajust the width */
+  .content-index-block:hover {
+    width: 100%;
+    height: auto;
+  }
+  
+  .content-index-block .content-index-list {
+    display: block;
+  }
+  
+  .content-index-block:hover .content-index-list {
+    width: 100%;
+    height: auto;
+  }
+  
+  .content-index-block .content-index-list > li,
+  .content-index-block .content-index-list ul,
+  .content-index-block .content-index-list ul > li {
+    padding: 0;
+    display: block;
+  }
+  
+  .content-index-block a,
+  .content-index-block .content-index-title {
+    padding: 3px 0;
+    display: block;
+  }
+  
+  .content-index-block .content-index-list > li:not(:last-child)::after,
+  .content-index-block .content-index-list ul > li::before {
+    margin-right: 0;
+    content: none;
+  }
+  
+  .content-index-block .content-index-title {
+    padding-right: 0;
+  }
+  
+} /* end mediaquerie; */
